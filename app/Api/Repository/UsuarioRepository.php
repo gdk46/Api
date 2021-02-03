@@ -5,7 +5,9 @@ namespace Api\Repository;
 use ConnectDb\Database\Connect;
 use Crud\Database\Crud;
 
-class UsuarioRepository
+use Api\Repository\RepositoryInterface;
+
+class UsuarioRepository implements RepositoryInterface
 {
     private string $table = 'user';
 

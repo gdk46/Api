@@ -3,20 +3,15 @@
 namespace Api\Service;
 
 use Api\Repository\ClienteRepository;
+use Api\Service\ServiceInterface;
 
-class ClienteService
+class ClienteService implements ServiceInterface
 {
-    private array $method = ['post', 'get', 'put', 'delete', 'option'];
-
+    private ClienteRepository $repository;
 
     public function __construct()
     {
-        
-    }
-
-    public function getMethod()
-    {
-        return $this->method;
+        $this->repository = new ClienteRepository();
     }
 
     /**
@@ -26,44 +21,38 @@ class ClienteService
      */
     public function get(string $query = null)
     {
-        if ($id) {
-            return User::select($id);
-        } else {
-            return User::selectAll();
-        }
+        $this->repository::list();
     }
-
 
     /**
      * Create new resource
      *
      * @return void
      */
-    public function post($dataArr)
+    public function post(array $dataArr)
     {
-        
+        $this->repository::create($dataArr);
     }
-
 
     /**
      * Modify an existing resource. 
      *
      * @return void
      */
-    public function put($dataArr)
+    public function put(array $dataArr)
     {
-        
+        $this->repository::update($dataArr);
     }
 
     /**
-     * Delete an existing resource. 
+     * Delete an existing resource.
      *
      * @param int $id Identifier
      * @return void
      */
     public function delete(int $id)
     {
-       
+        $this->repository::delete($id);
     }
 
     /**
@@ -73,6 +62,17 @@ class ClienteService
      */
     public function options()
     {
-        return $this->getMethod();
+        return [
+            "metohd" => ["post", "get", "put", "delete", "option"],
+            "endpoits" => [
+                "post" => "aplicacao/cliente/",
+                "get" => [
+                    "All" => "aplicacao/cliente/get/"
+                ],
+                "put" => "aplicacao/cliente/put/",
+                "delete" => "aplicacao/cliente/delete/{id}",
+                "option" => "aplicacao/cliente/option/",
+            ],
+        ];
     }
 }

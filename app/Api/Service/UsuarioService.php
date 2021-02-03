@@ -3,14 +3,15 @@
 namespace Api\Service;
 
 use Api\Repository\UsuarioRepository;
+use Api\Service\ServiceInterface;
 
-class UsuarioService
+class UsuarioService implements ServiceInterface
 {   
-    private UsuarioRepository $user;
+    private UsuarioRepository $repository;
 
     public function __construct()
     {
-        $this->user = new UsuarioRepository();
+        $this->repository = new UsuarioRepository();
     }
 
     /**
@@ -18,9 +19,9 @@ class UsuarioService
      *
      * @return void
      */
-    public function get()
+    public function get(string $query = null)
     {
-        $this->user::list();
+        $this->repository::list();
     }
 
     /**
@@ -28,9 +29,9 @@ class UsuarioService
      *
      * @return void
      */
-    public function post()
+    public function post(array $dataArr)
     {
-        $this->user::create($_POST);
+        $this->repository::create($_POST);
     }
 
     /**
@@ -38,9 +39,9 @@ class UsuarioService
      *
      * @return void
      */
-    public function put()
+    public function put(array $dataArr)
     {
-        $this->user::update($_POST);
+        $this->repository::update($_POST);
     }
 
     /**
@@ -51,7 +52,7 @@ class UsuarioService
      */
     public function delete(int $id)
     {
-        $this->user::delete($id);
+        $this->repository::delete($id);
     }
 
     /**
@@ -64,13 +65,13 @@ class UsuarioService
         return [
             "metohd" => ["post", "get", "put", "delete", "option"],
             "endpoits" => [
-                "post" => "aplicacao/user/",
+                "post" => "aplicacao/cliente/",
                 "get" => [
-                    "All" => "aplicacao/user/get/"
+                    "All" => "aplicacao/cliente/get/"
                 ],
-                "put" => "aplicacao/user/put/",
-                "delete" => "aplicacao/user/delete/{id}",
-                "option" => "aplicacao/user/option/",
+                "put" => "aplicacao/cliente/put/",
+                "delete" => "aplicacao/cliente/delete/{id}",
+                "option" => "aplicacao/cliente/option/",
             ],
         ];
     }
