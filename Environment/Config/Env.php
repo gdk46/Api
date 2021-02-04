@@ -1,8 +1,8 @@
 <?php
 
-namespace Config\Env;
+namespace Config;
 
-abstract class Env 
+abstract class Env
 {
     public const DB_FEATURE = [
         "db_drive" => "mysql",
@@ -13,4 +13,6 @@ abstract class Env
         "db_passwd" => "",
         "db_charset" => "utf8",
     ];
+
+    public const ROOT_API = "/php/api/";
 }
