@@ -2,19 +2,21 @@
 
 namespace Api\Http;
 
+use Api\Http\DispatcherHttp;
+use Api\Repository\TokenRepository;
 use Util\JsonUtil;
-// use Repository\TokensAutorizadosRepository;
 
 class RequestValidatorHttp
 {
-    private array $request;
-    // private array $dataFromRequest;
-    // private object $token;
+    private array $endpoint;
+    private TokenRepository $tokensAutorizadosRepository;
+    private DispatcherHttp $dispatcher;
 
     public function __construct($request = [])
     {
-        $this->request = $request;
-        // $this->token = new TokensAutorizadosRepository();
+        $this->endpoint = $request;
+        $this->tokensAutorizadosRepository = new TokenRepository();
+        $this->dispatcher = new DispatcherHttp($this->endpoint);
     }
     
     /**
@@ -23,9 +25,10 @@ class RequestValidatorHttp
     public function processRequest()
     {
         $retorno = utf8_encode('Rota nao permitida!');
-        if (in_array($this->request['method'], ['GET', 'POST', 'DELETE', 'PUT', 'OPITION'], true)) {
+        $method  = ['GET', 'POST', 'DELETE', 'PUT', 'OPITION'];
+
+        if (in_array($this->endpoint['method'], $method, true)) {
             // $retorno = $this->directRequest();
-            $retorno = "ok";
         }
 
         return $retorno;
@@ -34,15 +37,14 @@ class RequestValidatorHttp
     /**
      * 
      */
-    private function directRequest()
+    /* private function directRequest()
     {
-        if ($this->request['method'] !== "GET" && $this->request['method'] !== "DELETE") {
+        if ($this->endpoint['method'] !== "GET" && $this->endpoint['method'] !== "DELETE") {
             $this->dadosRequest = JsonUtil::tratarCorpoRequisicaoJson();
         }
 
-        $this->TokensAutorizadosRepository->validarToken(getallheaders()['Authorization']);
-        $metodo = $this->request['method'];
-        return $this->$metodo();
-    }
-
+        // $this->tokensAutorizadosRepository->token(getallheaders()['Authorization']);
+        return $this->dispatcher->callDispatcher();
+    } */
+ 
 }

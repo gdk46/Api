@@ -20,8 +20,8 @@ class UriHttp
         
         $endpoint['route']    = strtoupper($urls[0]);
         $endpoint['resource'] = $urls[1] ?? null;
-        $endpoint['id']      = $urls[2] ?? null;
-        $endpoint['method']  = $_SERVER['REQUEST_METHOD'];
+        $endpoint['id']       = $urls[2] ?? null;
+        $endpoint['method']   = $_SERVER['REQUEST_METHOD'];
 
         return $endpoint;
     }
