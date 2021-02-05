@@ -4,39 +4,25 @@ namespace Api\Service;
 
 interface ServiceInterface
 {
+        /**
+     * Retrieve the representation of a resource. 
+     */
+    public static function create(array $postArray);
+
     /**
      * Retrieve the representation of a resource. 
-     *
-     * @return void
      */
-    public function get(string $query = null);
+    public static function list();
 
     /**
-     * Create new resource
-     *
-     * @return void
+     * Retrieve the representation of a resource. 
      */
-    public function post(array $dataArr);
+    public static function delete(int $id);
 
     /**
-     * Modify an existing resource. 
-     *
-     * @return void
+     * Retrieve the representation of a resource. 
      */
-    public function put(array $dataArr);
+    public static function update(array $putArray, int $id);
 
-    /**
-     * Delete an existing resource. 
-     *
-     * @param int $id Identifier
-     * @return void
-     */
-    public function delete(int $id);
     
-    /**
-     * Check which HTTP methods a given resource supports
-     *
-     * @return void
-     */
-    public function options();
 }

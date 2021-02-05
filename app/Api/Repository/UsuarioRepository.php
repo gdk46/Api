@@ -2,55 +2,78 @@
 
 namespace Api\Repository;
 
-use ConnectDb\Database\Connect;
-use Crud\Database\Crud;
+use Api\Service\UsuarioService;
 
-use Api\Repository\RepositoryInterface;
-
-class UsuarioRepository implements RepositoryInterface
-{
-    private string $table = 'user';
+class UsuarioRepository
+{   
+    private UsuarioService $service;
+    private bool $authRequest = True;
+    private array $verbAccepted = ['GET', 'POST', 'PUT', 'DELETE'];
 
     public function __construct()
     {
-        $this->db   = new Connect();
-        $connection = $this->db->getConnect();
+        $this->service = new UsuarioService();
+    }
 
-        $this->crud = new Crud($connection);
+/**
+     * Authorization to use resources
+     *
+     * @return boolean
+     */
+    public function getAuthRequest(): bool
+    {
+        return $this->authRequest;
+    }
+
+    /**
+     * Verbs HTTP Accepted in request
+     *
+     * @return array
+     */
+    public function getVerbAccepted(): array
+    {
+        return $this->verbAccepted;
     }
 
     /**
      * Retrieve the representation of a resource. 
+     *
+     * @return void
      */
-    public static function create(array $postArray)
+    public function get()
     {
+        $this->service::list();
     }
 
     /**
-     * Retrieve the representation of a resource. 
+     * Create new resource
+     *
+     * @return void
      */
-    public static function list()
+    public function post(array $dataArr)
     {
+        $this->service::create($_POST);
     }
 
     /**
-     * Retrieve the representation of a resource. 
+     * Modify an existing resource. 
+     *
+     * @return void
      */
-    public static function delete(int $id)
+    public function put(array $dataArr)
     {
+        $id = "";
+        $this->service::update($dataArr, $id);
     }
 
     /**
-     * Retrieve the representation of a resource. 
+     * Delete an existing resource.
+     *
+     * @param int $id Identifier
+     * @return void
      */
-    public static function update(array $putArray)
+    public function delete(int $id)
     {
-    }
-
-    /**
-     * Retrieve the representation of a resource. 
-     */
-    public static function query(string $query)
-    {
+        $this->service::delete($id);
     }
 }

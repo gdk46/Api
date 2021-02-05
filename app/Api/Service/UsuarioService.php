@@ -2,77 +2,60 @@
 
 namespace Api\Service;
 
-use Api\Repository\UsuarioRepository;
+use ConnectDb\Database\Connect;
+use Crud\Database\Crud;
+use Config\Env;
+
 use Api\Service\ServiceInterface;
 
 class UsuarioService implements ServiceInterface
-{   
-    private UsuarioRepository $repository;
+{
+    private Connect $db;
+    private    Crud $crud;
+    private  string $table = 'user';
 
     public function __construct()
     {
-        $this->repository = new UsuarioRepository();
+        $this->db   = new Connect(Env::DB_FEATURE);
+        $this->crud = new Crud($this->db->getConnect());
     }
 
     /**
      * Retrieve the representation of a resource. 
-     *
-     * @return void
      */
-    public function get(string $query = null)
+    public static function create(array $postArray)
     {
-        $this->repository::list();
+        self::$crud->create(self::$table, $postArray);
     }
 
     /**
-     * Create new resource
-     *
-     * @return void
+     * Retrieve the representation of a resource. 
      */
-    public function post(array $dataArr)
+    public static function list()
     {
-        $this->repository::create($_POST);
+        self::$crud->read(self::$table);
     }
 
     /**
-     * Modify an existing resource. 
-     *
-     * @return void
+     * Retrieve the representation of a resource. 
      */
-    public function put(array $dataArr)
+    public static function delete(int $id)
     {
-        $this->repository::update($_POST);
+        self::$crud->delete(self::$table, "WHERE id = {$id}");
     }
 
     /**
-     * Delete an existing resource.
-     *
-     * @param int $id Identifier
-     * @return void
+     * Retrieve the representation of a resource. 
      */
-    public function delete(int $id)
+    public static function update(array $putArray, int $id)
     {
-        $this->repository::delete($id);
+        self::$crud->update(self::$table, $putArray, "WHERE id = {$id}");
     }
 
     /**
-     * Check which HTTP methods a given resource supports
-     *
-     * @return void
+     * Retrieve the representation of a resource. 
      */
-    public function options()
-    {
-        return [
-            "metohd" => ["post", "get", "put", "delete", "option"],
-            "endpoits" => [
-                "post" => "aplicacao/cliente/",
-                "get" => [
-                    "All" => "aplicacao/cliente/get/"
-                ],
-                "put" => "aplicacao/cliente/put/",
-                "delete" => "aplicacao/cliente/delete/{id}",
-                "option" => "aplicacao/cliente/option/",
-            ],
-        ];
+    public static function query(string $query)
+    {  
     }
 }
