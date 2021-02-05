@@ -12,6 +12,7 @@ function autoload($class)
     // directórios especificos para requisição dos namespace
     $base_dir = [
         __DIR__ . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . $class . '.php',
+        __DIR__ . DIRECTORY_SEPARATOR . 'app\Libs' . DIRECTORY_SEPARATOR . $class . '.php',
         __DIR__ . DIRECTORY_SEPARATOR . 'Environment' . DIRECTORY_SEPARATOR . $class . '.php',
     ];
 
