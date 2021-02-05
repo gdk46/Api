@@ -14,5 +14,5 @@ abstract class Env
         "db_charset" => "utf8",
     ];
 
-    public const ROOT_API = "/php/api/";
+    public const ROOT_API = "/php/Api/";
 }
