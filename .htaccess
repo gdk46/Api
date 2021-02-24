@@ -1,9 +1,0 @@
-# habilita a reescrita de URL
-RewriteEngine on
-
-# verifica se o file e o directório existe
-RewriteCond %{REQUEST_FILENAME}% !-f
-RewriteCond %{REQUEST_FILENAME}% !-d
-
-# regula rota para index
-RewriteRule ^(.*) index.php [NC,L]
